@@ -12,8 +12,9 @@ defmodule HelloWeb.Telemetry do
       # Telemetry poller will execute the given period measurements
       # every 10_000ms. Learn more here: https://hexdocs.pm/telemetry_metrics
       {:telemetry_poller, measurements: periodic_measurements(), period: 10_000},
+      {TelemetryMetricsPrometheus, [metrics: metrics()]}
       # Add reporters as children of your supervision tree.
-      {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
+      # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
@@ -22,6 +23,7 @@ defmodule HelloWeb.Telemetry do
   def metrics do
     [
       # Phoenix Metrics
+      counter("phoenix.router_dispatch.stop.duration"),
       summary("phoenix.endpoint.stop.duration",
         unit: {:native, :millisecond}
       ),
