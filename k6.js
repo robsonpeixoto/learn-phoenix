@@ -8,5 +8,5 @@ export let options = {
 };
 
 export default function () {
-  http.get('http://localhost:4000/api/item')
+  http.get('http://localhost:4001/api/item')
 }
